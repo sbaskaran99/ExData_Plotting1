@@ -1,0 +1,17 @@
+#Plot2
+hc<-read.table("household_power_consumption.txt", header=TRUE,sep=";",stringsAsFactors=FALSE)
+hc$Global_active_power<-as.numeric(hc$Global_active_power)
+hc$Global_reactive_power<-as.numeric(hc$Global_reactive_power)
+hc$Voltage<-as.numeric(hc$Voltage)
+hc$Global_intensity<-as.numeric(hc$Global_intensity)
+hc$Sub_metering_1<-as.numeric(hc$Sub_metering_1)
+hc$Sub_metering_2<-as.numeric(hc$Sub_metering_2)
+hc$Sub_metering_3<-as.numeric(hc$Sub_metering_3)
+hc$datetime<-paste(hc$Date,hc$Time,"")
+hc$datetime<-strptime(hc$datetime,format = "%d/%m/%Y %H:%M:%S")
+hc1<-hc[hc$datetime>="2007-02-01" & hc$datetime<"2007-02-03",]
+hc1<-na.omit(hc1)
+png(filename="plot2.png",width=480,height=480)
+plot(hc1$datetime,hc1$Global_active_power,type = "l", ann=FALSE)
+title(ylab = "Global Active Power(kilowatts)")
+dev.off()
